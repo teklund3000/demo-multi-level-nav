@@ -4,7 +4,14 @@ body {
 }
 header {
     max-width: 60rem;
-    margin: 0 auto;
+    margin: 0 auto; 
+}
+h1 {
+    margin-left: 1 rem;
+}
+svg {
+    visibility: hidden;
+    max-width: 1.25rem;
 }
 
 /* step 1: styling for small screens first (mobile first development). */
@@ -37,4 +44,78 @@ ul.sub-menu > li a {
 }
 ul.sub-menu {
     padding: 0 1.25rem;
+}
+
+
+@media screen and (min-width: 60rem) {
+    ul.menu {
+        display: flex;
+    }
+    ul.menu li {
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-basis: auto;
+        /* alignment looks funny bc the content is all different sizes */
+        text-align: center;
+    }
+
+/* step two: positiong and styling the dropdown menu, and then hide it.  */
+
+    ul.sub-menu {
+        padding: 0;
+    /* when using position: absolute, the element is removed from the document layout - the space it took up is now gone.  */
+        position: absolute;
+    /* adding positions will add the space back in .. unless the parent container has the ..something? */
+        top: 56px;
+        left: 0;
+        background-color: #191919;
+        border-radius: 0 0 5px 5px;
+    /* hiding submenu but making it accessible to screen readers -- (this step AFTER doing the parent element container)  */
+        visibility: hidden;
+        opacity: 0;
+
+        /* step 4: add transition state */
+        /* when adding a transition state, add it to the element that is changing, before it changes */
+        transition: all 0.5s ease;
+    }
+
+    /* parent container */
+    /* when positioning an absolute item make the parent element position relative to position in relation to it and not the viewport (which is the default).  */
+    ul.menu li {
+        position: relative;
+        /* now the top:56px, left: 0 is now dependent on the parent its on */
+        white-space: nowrap; 
+    }
+
+    /* step 3: add hover states & show submenus */
+    ul.menu li:hover > ul {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    /* step 5: add accessibility with the :focus-within state */
+    ul.menu li:focus-within > ul,
+    ul.menu li > ul:focus {
+        visibility: visible;
+        opacity: 1;
+        display: block;
+    }
+
+
+    /* in class assignment */
+    /* ul.menu li:hover {
+        color: grey;
+    } */
+    svg {
+        visibility: visible;
+        fill: white;
+        padding-left: 0.5rem;
+    }
+    svg:hover {
+        fill: hotpink;
+    }
+    ul.menu a:hover {
+        color: hotpink;
+    }
+
 }
